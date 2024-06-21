@@ -1,14 +1,45 @@
+import requests
+
 STOCK = "TSLA"
 COMPANY_NAME = "Tesla Inc"
+
+stock_requests = requests.get("https://www.alphavantage.co/query")
+
+stock_param = {
+    
+}
 
 ## STEP 1: Use https://www.alphavantage.co
 # When STOCK price increase/decreases by 5% between yesterday and the day before yesterday then print("Get News").
 
+
+
+
+
+
 ## STEP 2: Use https://newsapi.org
 # Instead of printing ("Get News"), actually get the first 3 news pieces for the COMPANY_NAME. 
 
+
+
+
+
+
+
 ## STEP 3: Use https://www.twilio.com
 # Send a seperate message with the percentage change and each article's title and description to your phone number. 
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 #Optional: Format the SMS message like this: 
