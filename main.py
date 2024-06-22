@@ -1,20 +1,21 @@
+import os
 import requests
 from twilio.rest import Client
+from dotenv import load_dotenv
 
-STOCK = "TSLA"
-COMPANY_NAME = "Tesla Inc"
-STOCK_API = "NIW17EWLXNCHXVI6"
+load_dotenv()
+
+STOCK = os.getenv("STOCK")
+COMPANY_NAME = os.getenv("COMPANY_NAME")
+STOCK_API = os.getenv("STOCK_API")
+NEWS_API = os.getenv("NEWS_API")
+TWILLIO_SID = os.getenv("TWILLIO_SID")
+TWILLIO_TOKEN = os.getenv("TWILLIO_TOKEN")
+TWILLIO_FROM = os.getenv("TWILLIO_FROM")
+TWILLIO_TO = os.getenv("TWILLIO_TO")
+
 STOCK_ENDPOINT = "https://www.alphavantage.co/query"
 NEWS_ENDPOINT = "https://newsapi.org/v2/everything"
-
-NEWS_API = "46727271080d49d6a4172c9a5fb6e569"\
-
-TWILLIO_SID = "AC740ac3be0bfb5b8588b9e8c18f655b99"
-TWILLIO_TOKEN = "3534759cccd171ece8b8c5a470ea8e25"
-
-
-
-
 
 stock_param = {
     "function": "TIME_SERIES_DAILY",
@@ -23,33 +24,21 @@ stock_param = {
 }
 
 stock_requests = requests.get(STOCK_ENDPOINT, params=stock_param)
-
 stock_data = stock_requests.json()
-
 yesterday_stock = stock_data["Time Series (Daily)"]
-
 data_list = [value for (key, value) in yesterday_stock.items()]
-
 yesterday_closing_price = float(data_list[0]["4. close"])
-
-
-
 day_before_yest_closing_price = float(data_list[1]["4. close"])
 
 
 
 stock_price_diff = (yesterday_closing_price - day_before_yest_closing_price)
-
 up_down = None
-
 if stock_price_diff > 0:
     up_down = "📈"
 else:
     up_down = "📉"
-
-
 stock_price_diff_percentage = round((stock_price_diff/day_before_yest_closing_price)*100, 2)
-
 print(f"Stock Difference {stock_price_diff_percentage}%")
 
 if stock_price_diff_percentage > 0.5:
